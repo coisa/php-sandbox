@@ -1,0 +1,24 @@
+version: '3'
+services:
+  web:
+    build: .
+    image: coisa/skeleton
+    hostname: skeleton
+    ports:
+      - 8080:80
+    env_file: .env
+    environment:
+      DEBUG: 1
+      DSN: "mysql://user:pass@mysql/db"
+    volumes:
+      - ./:/opt/project
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql/mysql-server:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "db"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "pass"

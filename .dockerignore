@@ -1,0 +1,10 @@
+/.git/
+/.idea/
+/vendor/
+.gitignore
+composer.phar
+composer.lock
+docker-compose.yml
+Dockerfile
+README.md
+LICENSE
