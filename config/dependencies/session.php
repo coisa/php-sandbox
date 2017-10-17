@@ -10,12 +10,11 @@ return [
             throw new \RuntimeException('Enable your PHP Session Module');
         }
 
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+        return $container->get('aura.session');
+    },
+    'aura.session' => function (ContainerInterface $container) {
+        $factory = new Aura\Session\SessionFactory;
 
-            // @TODO add some configuration with default values
-        }
-
-        return $_SESSION;
+        return $factory->newInstance($_COOKIE);
     }
 ];
