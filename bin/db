@@ -1,3 +1,32 @@
 #!/usr/bin/php
 <?php
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$migrate = function (Spot\Locator $spot) {
+    $finder = new Symfony\Component\Finder\Finder();
+
+    $finder->files();
+    $finder->in(__DIR__ . '/../src/');
+    $finder->contains('Entity');
+
+    foreach ($finder->getIterator() as $file) {
+        include_once $file->getRealPath();
+    }
+
+    foreach (get_declared_classes() as $className) {
+        if ($className === 'Spot\\Entity') {
+            continue;
+        }
+
+        if (in_array('Spot\\EntityInterface', class_implements($className))) {
+            $mapper = $spot->mapper($className);
+
+            return $mapper->migrate();
+        }
+    }
+};
+
+$container = require __DIR__ . '/../config/container.php';
+
+echo $migrate($container->get('spot.locator'));
