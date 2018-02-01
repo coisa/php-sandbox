@@ -1,14 +1,22 @@
-FROM composer
+FROM php:7.2-alpine
+MAINTAINER Felipe Sayão Lobato Abreu <contato@felipeabreu.com.br>
 
 EXPOSE 80
 
 ADD ./ /opt/project
 WORKDIR /opt/project
 
-RUN composer install \
-    --no-dev \
-    --ignore-platform-reqs \
-    --prefer-dist \
-    --optimize-autoloader
+COPY ./ /opt/project
+
+RUN php -r "readfile('https://getcomposer.org/installer');" | php \
+    && \
+    php composer.phar install \
+        --no-dev \
+        --prefer-dist \
+        --optimize-autoloader \
+    && \
+    rm -f composer.phar
 
 CMD ["php", "-S", "0.0.0.0:80", "-t", "/opt/project/public"]
+
+# TODO nginx, monit, letsencrypt (renew), user, permissions

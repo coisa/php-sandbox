@@ -1,24 +1,36 @@
 version: '3'
 services:
-  php:
+  web:
     build: .
     image: coisa/skeleton
-    hostname: skeleton
     ports:
-      - 8080:80
+      - 80:80
     env_file: .env
     environment:
       DEBUG: 1
-      DSN: "mysql://user:pass@mysql/db"
+      DSN: "mysql://my-user:my-pass@mysql-server/my-db"
+      RABBITMQ_USER: "my-user"
+      RABBITMQ_PASS: "my-pass"
+      RABBITMQ_HOST: "rabbitmq"
+      RABBITMQ_VHOST: "my-vhost"
     volumes:
       - ./:/opt/project
     depends_on:
-      - mysql
+      - mysql-server
 
-  mysql:
+  mysql-server:
     image: mysql/mysql-server:5.6
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "db"
-      MYSQL_USER: "user"
-      MYSQL_PASSWORD: "pass"
+      MYSQL_ROOT_PASSWORD: "rootpass"
+      MYSQL_DATABASE: "my-db"
+      MYSQL_USER: "my-user"
+      MYSQL_PASSWORD: "my-pass"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: "my-user"
+      RABBITMQ_DEFAULT_PASS: "my-pass"
+      RABBITMQ_DEFAULT_VHOST: "my-vhost"
