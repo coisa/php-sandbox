@@ -26,7 +26,9 @@
         "symfony/console": "^3.3",
         "aura/session": "^2.1",
         "symfony/finder": "^3.3",
-        "cakephp/utility": "^3.5"
+        "cakephp/utility": "^3.5",
+        "robmorgan/phinx": "^0.9.2",
+        "slim/http-cache": "^0.4.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^3.3",

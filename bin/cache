@@ -1,3 +1,10 @@
 #!/usr/bin/php
 <?php
 
+# TODO
+# bin/cache clear
+# bin/cache list
+# bin/cache remove [index]
+# bin/cache add [index] [value] {--ttl ttl} {--overwrite}
+# bin/cache get [index] {default}
+# bin/cache expires [index] {time}

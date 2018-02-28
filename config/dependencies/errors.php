@@ -5,43 +5,37 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 use Psr\Container\ContainerInterface;
 
 return [
-    'errorHandler' => function (ContainerInterface $container) {
-        return $container->get('whoops.error_handler');
-    },
-    'whoops' => function (ContainerInterface $container) {
-        $run = $container->get('whoops.run');
+    'Whoops\Run' => function (ContainerInterface $container) {
+        $run = new Whoops\Run();
 
         if (getenv('DEBUG', false)) {
-            $run->pushHandler($container->get('whoops.pretty_page_handler'));
+            $run->pushHandler($container->get(Whoops\Handler\PrettyPageHandler::class));
         }
 
         if (Whoops\Util\Misc::isAjaxRequest()) {
-            $run->pushHandler($container->get('whoops.json_response_handler'));
+            $run->pushHandler($container->get(Whoops\Handler\JsonResponseHandler::class));
         }
 
-        $run->pushHandler($container->get('whoops.plain_text_handler'));
+        $run->pushHandler($container->get(Whoops\Handler\PlainTextHandler::class));
 
         return $run;
     },
-    'whoops.run' => function (ContainerInterface $container) {
-        return new Whoops\Run();
-    },
-    'whoops.pretty_page_handler' => function (ContainerInterface $container) {
+    'Whoops\Handler\PrettyPageHandler' => function (ContainerInterface $container) {
         return new Whoops\Handler\PrettyPageHandler;
     },
-    'whoops.json_response_handler' => function (ContainerInterface $container) {
+    'Whoops\Handler\JsonResponseHandler' => function (ContainerInterface $container) {
         return new Whoops\Handler\JsonResponseHandler;
     },
-    'whoops.plain_text_handler' => function (ContainerInterface $container) {
-        $logger = $container->get('logger');
+    'Whoops\Handler\PlainTextHandler' => function (ContainerInterface $container) {
+        $logger = $container->get(Psr\Log\LoggerInterface::class);
 
         $handler = new Whoops\Handler\PlainTextHandler($logger);
         $handler->loggerOnly(true);
 
         return $handler;
     },
-    'whoops.error_handler' => function (ContainerInterface $container) {
-        $whoops = $container->get('whoops');
+    'Zeuxisoo\Whoops\Provider\Slim\WhoopsErrorHandler' => function (ContainerInterface $container) {
+        $whoops = $container->get(Whoops\Run::class);
 
         return new Zeuxisoo\Whoops\Provider\Slim\WhoopsErrorHandler($whoops);
     }

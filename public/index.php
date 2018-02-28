@@ -2,9 +2,22 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$container = require __DIR__ . '/../config/container.php';
+/**
+ * Application scope isolation
+ */
+call_user_func(function () {
+    /** @var \Psr\Container\ContainerInterface $container */
+    $container = require __DIR__ . '/../config/container.php';
 
-/** @var Slim\App $application */
-$application = $container->get('application');
+    $app = new Slim\App($container);
 
-return $application->run();
+    $routes = require __DIR__ . '/../config/routes.php';
+    $routes($app);
+
+    $middlewares = require __DIR__ . '/../config/middlewares.php';
+    $middlewares($app);
+
+    chdir(dirname(__DIR__));
+
+    return $app->run();
+});

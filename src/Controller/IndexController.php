@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class IndexController
+ *
  * @package Application\Controller
  */
 class IndexController extends ApplicationController

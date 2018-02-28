@@ -6,27 +6,24 @@ use Psr\Container\ContainerInterface;
 
 return [
     'renderer' => function (ContainerInterface $container) {
-        return $container->get('plates');
+        return $container->get(League\Plates\Engine::class);
     },
-    'plates' => function (ContainerInterface $container) {
-        $engine = $container->get('plates.engine');
+    League\Plates\Engine::class => function (ContainerInterface $container) {
+        $settings = $container->get('settings');
+
+        $engine = new League\Plates\Engine($settings['plates']['path'], $settings['plates']['extension']);
 
         $engine->loadExtensions([
-            $container->get('plates.asset'),
-            $container->get('plates.url')
+            $container->get(League\Plates\Extension\Asset::class),
+            $container->get(League\Plates\Extension\URI::class)
         ]);
 
         return $engine;
     },
-    'plates.engine' => function (ContainerInterface $container) {
-        $settings = $container->get('settings');
-
-        return new League\Plates\Engine($settings['plates']['path'], $settings['plates']['extension']);
-    },
-    'plates.asset' => function (ContainerInterface $container) {
+    League\Plates\Extension\Asset::class => function (ContainerInterface $container) {
         return new League\Plates\Extension\Asset(dirname(dirname(__DIR__)) . '/public');
     },
-    'plates.url' => function () {
+    League\Plates\Extension\URI::class => function () {
         return new League\Plates\Extension\URI($_SERVER['PATH_INFO']);
     },
 ];

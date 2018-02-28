@@ -8,23 +8,12 @@ return [
     'rabbitmq' => function (ContainerInterface $container) {
         return $container->get('rabbitmq.queues')['default'];
     },
-    'rabbitmq.connection' => function (ContainerInterface $container) {
-        $settings = $container->get('settings');
-        $connection = $settings['rabbitmq']['connection'];
-
-        return new PhpAmqpLib\Connection\AMQPStreamConnection(
-            $connection['host'],
-            $connection['port'],
-            $connection['user'],
-            $connection['password']
-        );
-    },
     'rabbitmq.channels' => function (ContainerInterface $container) {
         $settings = $container->get('settings');
         $channels = $settings['rabbitmq']['channels'] ?? [];
 
         /** @var PhpAmqpLib\Connection\AMQPStreamConnection $connection */
-        $connection = $container->get('rabbitmq.connection');
+        $connection = $container->get(PhpAmqpLib\Connection\AMQPStreamConnection::class);
 
         foreach ($channels as $name => $properties) {
             $channel = $connection->channel();
@@ -53,5 +42,16 @@ return [
         }
 
         return $queues;
-    }
+    },
+    'PhpAmqpLib\Connection\AMQPStreamConnection' => function (ContainerInterface $container) {
+        $settings = $container->get('settings');
+        $connection = $settings['rabbitmq']['connection'];
+
+        return new PhpAmqpLib\Connection\AMQPStreamConnection(
+            $connection['host'],
+            $connection['port'],
+            $connection['user'],
+            $connection['password']
+        );
+    },
 ];

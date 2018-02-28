@@ -2,6 +2,12 @@
 
 return [
     'settings' => [
+        // PHP ini_set
+        'php' => [
+            'session.save_handler' => 'redis',
+            'session.save_path' => getenv('REDIS_DSN'),
+        ],
+
         // Environment config
         'debug'         => getenv('DEBUG') ?: false,
 
@@ -19,7 +25,11 @@ return [
 
         // Database connection config
         'db'            => [
-            'default' => getenv('DSN') ?: 'sqlite://' . __DIR__ . '/../data/db.sqlite'
+            'default' => [
+                'dsn'      => getenv('DB_DSN'),
+                'user'     => getenv('DB_USER'),
+                'password' => getenv('DB_PASS')
+            ]
         ],
 
         // RabbitMQ
@@ -38,5 +48,11 @@ return [
                 ]
             ]
         ],
+
+        // Http Cache
+        'http-cache' => [
+            'type' => 'public',
+            'maxAge' => 86400
+        ]
     ]
 ];

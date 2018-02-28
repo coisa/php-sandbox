@@ -1,15 +1,11 @@
 <?php
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Doctrine\DBAL\Configuration;
-use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Tools\Console\ConsoleRunner;
+/** @var Psr\Container\ContainerInterface $container */
+$container = require __DIR__ . '/container.php';
 
-$dsn = getenv('DSN', false);
-if (!$dsn) {
-    throw new \RuntimeException('DSN connection settings not found');
-}
+/** @var Doctrine\DBAL\Connection $connection */
+$connection = $container->get(Doctrine\DBAL\Connection::class);
 
-$connection = DriverManager::getConnection(['url' => $dsn], new Configuration());
-
-return ConsoleRunner::createHelperSet($connection);
+return Doctrine\DBAL\Tools\Console\ConsoleRunner::createHelperSet($connection);

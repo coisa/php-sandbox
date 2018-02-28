@@ -30,3 +30,10 @@ $migrate = function (Spot\Locator $spot) {
 $container = require __DIR__ . '/../config/container.php';
 
 echo $migrate($container->get('spot.locator'));
+
+# TODO
+# bin/db migrate (use env to define migration method? Ask about the method?)
+# bin/db spot2:migrate --path /path/to/entities (dir or file)
+# bin/db phinx:migrate --path /path/to/entities
+# bin/db doctrine:migrate --path /path/to/entities
+# bin/db dbal:execute --path /path/to/file.sql
