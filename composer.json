@@ -49,8 +49,24 @@
         }
     },
     "scripts": {
+        "test": [
+            "@composer install",
+            "phpunit"
+        ],
+	"githooks-link": [
+            "rm -rf .git/hooks",
+            "ln -sfT .git-hooks .git/hooks"
+	],
+        "pre-install-cmd": [
+            "@githooks-link"
+        ],
         "pre-update-cmd": [
+            "@githooks-link",
             "Application\\Composer\\Command\\CreateProject::migrate"
         ]
+    },
+    "scripts-descriptions": {
+        "test": "Execute PHPUnit Application Tests",
+        "githooks-link": "Create symbolic link of git hooks for this repository"
     }
 }
