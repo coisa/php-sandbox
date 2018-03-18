@@ -1,3 +1,10 @@
 #!/bin/bash
 
-echo "Post-Merge"
+changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
+
+check_run() {
+  echo "$changed_files" | grep -E --quiet "$1" && eval "$2"
+}
+
+check_run composer "composer install"
+check_run docker "docker-compose up -d"
