@@ -14,6 +14,9 @@ call_user_func(function () {
     $routes = require __DIR__ . '/../config/routes.php';
     $routes($app);
 
+    $acl = require __DIR__ . '/../config/acl.php';
+    $acl($app);
+
     $middlewares = require __DIR__ . '/../config/middlewares.php';
     $middlewares($app);
 

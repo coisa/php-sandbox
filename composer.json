@@ -28,7 +28,8 @@
     "symfony/finder": "^3.3",
     "cakephp/utility": "^3.5",
     "robmorgan/phinx": "^0.9.2",
-    "slim/http-cache": "^0.4.0"
+    "slim/http-cache": "^0.4.0",
+    "zendframework/zend-permissions-acl": "^2.6"
   },
   "require-dev": {
     "symfony/var-dumper": "^3.3",
