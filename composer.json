@@ -55,7 +55,7 @@
     ],
     "githooks-link": [
       "rm -rf .git/hooks",
-      "ln -sfT .git-hooks .git/hooks"
+      "ln -sfT ../.git-hooks ./.git/hooks"
     ],
     "pre-install-cmd": [
       "@githooks-link"
