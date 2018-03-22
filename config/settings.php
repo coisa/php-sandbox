@@ -26,20 +26,20 @@ return [
         // Database connection config
         'db'            => [
             'default' => [
-                'dsn'      => getenv('DB_DSN'),
-                'user'     => getenv('DB_USER'),
-                'password' => getenv('DB_PASS')
+                'dsn'      => 'mysql:host=' . getenv('MYSQL_HOST') . ';dbname=' . getenv('MYSQL_DATABASE'),
+                'user'     => getenv('MYSQL_USER'),
+                'password' => getenv('MYSQL_PASSWORD')
             ]
         ],
 
         // RabbitMQ
         'rabbitmq'      => [
             'connection' => [
-                'host'     => getenv('RABBITMQ_HOST') ?: '127.0.0.1',
-                'port'     => getenv('RABBITMQ_PORT') ?: 5672,
-                'user'     => getenv('RABBITMQ_USER'),
-                'password' => getenv('RABBITMQ_PASS'),
-                'vhost'    => getenv('RABBITMQ_VHOST')
+                'host'     => getenv('RABBITMQ_DEFAULT_HOST') ?: '127.0.0.1',
+                'port'     => getenv('RABBITMQ_DEFAULT_PORT') ?: 5672,
+                'user'     => getenv('RABBITMQ_DEFAULT_USER'),
+                'password' => getenv('RABBITMQ_DEFAULT_PASS'),
+                'vhost'    => getenv('RABBITMQ_DEFAULT_VHOST')
             ],
             'channels'   => [
                 'default' => [

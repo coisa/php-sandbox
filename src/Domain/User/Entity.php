@@ -2,6 +2,8 @@
 
 namespace Application\Domain\User;
 
+use CoiSA\Doctrine\DBAL\Types\PasswordType;
+use Doctrine\DBAL\Types\Type;
 use Spot\Entity as SpotEntity;
 use Spot\EventEmitter;
 use Spot\Mapper;
@@ -23,12 +25,16 @@ class Entity extends SpotEntity
      */
     public static function fields(): array
     {
+        if (!Type::hasType(PasswordType::NAME)) {
+            Type::addType(PasswordType::NAME, PasswordType::class);
+        }
+
         return [
             'id'          => ['type' => 'integer', 'primary' => true, 'autoincrement' => true],
             'username'    => ['type' => 'string', 'unique' => true, 'required' => true],
-            'password'    => ['type' => 'string', 'required' => true], // @TODO Dbal password type
-            'created_at'  => ['type' => 'datetime', 'value' => new \DateTime(), 'required' => true],
-            'modified_at' => ['type' => 'datetime', 'value' => new \DateTime()]
+            'password'    => ['type' => PasswordType::NAME, 'required' => true],
+            'created_at'  => ['type' => 'datetime', 'columnDefinition' => 'DATETIME DEFAULT CURRENT_TIMESTAMP'],
+            'modified_at' => ['type' => 'datetime', 'columnDefinition' => 'DATETIME NULL ON UPDATE CURRENT_TIMESTAMP']
         ];
     }
 

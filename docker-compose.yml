@@ -3,22 +3,10 @@ services:
   web:
     build: .
     image: coisa/skeleton
+    hostname: web.local
     ports:
       - 80:80
     env_file: .env
-    environment:
-      DEBUG: 1
-
-      DB_DSN: "mysql:host=mysql;dbname=my-db"
-      DB_USER: "my-user"
-      DB_PASS: "my-pass"
-
-      RABBITMQ_USER: "my-user"
-      RABBITMQ_PASS: "my-pass"
-      RABBITMQ_HOST: "rabbitmq"
-      RABBITMQ_VHOST: "my-vhost"
-
-      REDIS_DSN: "tcp://redis-server:6379?auth=mypasswd"
     volumes:
       - ./:/opt/project
     depends_on:
@@ -26,20 +14,15 @@ services:
 
   mysql:
     image: mysql/mysql-server:5.6
-    environment:
-      MYSQL_ROOT_PASSWORD: "rootpass"
-      MYSQL_DATABASE: "my-db"
-      MYSQL_USER: "my-user"
-      MYSQL_PASSWORD: "my-pass"
+    hostname: mysql.local
+    env_file: .env
 
   rabbitmq:
     image: rabbitmq:3-management
+    hostname: rabbitmq.local
     ports:
       - 15672:15672
-    environment:
-      RABBITMQ_DEFAULT_USER: "my-user"
-      RABBITMQ_DEFAULT_PASS: "my-pass"
-      RABBITMQ_DEFAULT_VHOST: "my-vhost"
+    env_file: .env
 
   redis:
     image: redis
