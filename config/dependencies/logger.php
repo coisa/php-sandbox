@@ -11,8 +11,7 @@ return [
     'Monolog\Logger' => function (ContainerInterface $container) {
         $logger = new Monolog\Logger('app');
 
-        $logger->pushHandler($container->get('logger.debug_stream_handler'));
-        $logger->pushHandler($container->get('logger.app_stream_handler'));
+        $logger->pushHandler($container->get(Monolog\Handler\StreamHandler::class));
 
         // Alternative access to logger **not encouraged**
         Monolog\Registry::addLogger($logger);
