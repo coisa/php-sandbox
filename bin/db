@@ -29,7 +29,7 @@ $migrate = function (Spot\Locator $spot) {
 
 $container = require __DIR__ . '/../config/container.php';
 
-echo $migrate($container->get('spot.locator'));
+echo $migrate($container->get(Spot\Locator::class));
 
 # TODO
 # bin/db migrate (use env to define migration method? Ask about the method?)
