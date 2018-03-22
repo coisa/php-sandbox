@@ -17,7 +17,7 @@ return function (App $app) {
     $acl->addRole(new Acl\Role\GenericRole('admin'));
 
     // Define ACL Rules
-    $acl->allow('admin', '*');
+    $acl->allow('admin');
 
     // Add ACL to request attribute
     $app->add(function (Http\Request $request, Http\Response $response, callable $next) use ($acl) {
