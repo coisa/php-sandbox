@@ -22,7 +22,7 @@ services:
     volumes:
       - ./:/opt/project
     depends_on:
-      - mysql-server
+      - mysql
 
   mysql:
     image: mysql/mysql-server:5.6

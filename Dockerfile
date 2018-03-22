@@ -8,6 +8,9 @@ WORKDIR /opt/project
 
 COPY ./ /opt/project
 
+# RabbitMQ dependency
+RUN docker-php-ext-install bcmath
+
 RUN php -r "readfile('https://getcomposer.org/installer');" | php \
     && \
     php composer.phar install \
