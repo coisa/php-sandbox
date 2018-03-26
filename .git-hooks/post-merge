@@ -1,10 +1,28 @@
 #!/bin/bash
 
-changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
-
-check_run() {
-  echo "$changed_files" | grep -E --quiet "$1" && eval "$2"
+has_changed() {
+    git diff --name-only HEAD@{1} HEAD | grep "^$1" > /dev/null 2>&1
 }
 
-check_run composer "composer install"
-check_run docker "docker-compose up -d"
+# Update composer dependencies
+if has_changed composer; then
+    docker-compose run --rm web /usr/local/bin/composer install \
+        --ignore-platform-reqs \
+        --prefer-dist \
+        --optimize-autoloader
+fi
+
+# Rebuild docker image
+if has_changed Dockerfile; then
+    docker-compose build
+fi
+
+# Recreate docker services
+if has_changed "docker-.*\.ya?ml"; then
+    docker-compose up -d web
+fi
+
+# Update database schema
+if has_changed ".*Entity\.php" || has_changed "bin/db"; then
+    docker-compose run --rm web php bin/db update
+fi
