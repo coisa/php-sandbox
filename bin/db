@@ -3,102 +3,16 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-function getSpotMappers(Spot\Locator $spot): array
-{
-    $finder = new Symfony\Component\Finder\Finder();
-
-    $finder->files();
-    $finder->in(__DIR__ . '/../src/');
-    $finder->contains('Entity');
-
-    foreach ($finder->getIterator() as $file) {
-        include_once $file->getRealPath();
-    }
-
-    $mappers = [];
-
-    foreach (get_declared_classes() as $className) {
-        if ($className === 'Spot\\Entity') {
-            continue;
-        }
-
-        if (in_array('Spot\\EntityInterface', class_implements($className))) {
-            $mappers []= $spot->mapper($className);
-        }
-    }
-
-    return $mappers;
-}
-
-function migrate(Spot\Locator $spot): void
-{
-    /** @var Spot\Mapper $mapper */
-    foreach (getSpotMappers($spot) as $mapper) {
-        $mapper->migrate();
-    }
-}
-
-function dumpsql(Spot\Locator $spot)
-{
-    $queries = [];
-
-    /** @var Spot\Mapper $mapper */
-    foreach (getSpotMappers($spot) as $mapper) {
-        $resolver = $mapper->resolver();
-
-        $schema = $resolver->migrateCreateSchema();
-        $queries += $schema->toSql($mapper->connection()->getDatabasePlatform());
-    }
-
-    return implode("\n", $queries);
-}
-
-function diffsql(Spot\Locator $spot)
-{
-    $queries = [];
-
-    /** @var Spot\Mapper $mapper */
-    foreach (getSpotMappers($spot) as $mapper) {
-        // Mapper knows currently set entity
-        $entity = $mapper->entity();
-        $table = $entity::table();
-        $connection = $mapper->connection();
-
-        $schemaManager = $connection->getSchemaManager();
-        $tableObject = $schemaManager->listTableDetails($table);
-
-        $tableColumns = $tableObject->getColumns();
-        $tableExists = !empty($tableColumns);
-
-        if (!$tableExists) {
-            // Create new table
-            $newSchema = $mapper->resolver()->migrateCreateSchema();
-            $queries = $newSchema->toSql($connection->getDatabasePlatform());
-        } else {
-            // Update existing table
-            $fromSchema = new \Doctrine\DBAL\Schema\Schema([$tableObject]);
-            $newSchema = $mapper->resolver()->migrateCreateSchema();
-
-            $queries = $fromSchema->getMigrateToSql($newSchema, $connection->getDatabasePlatform());
-        }
-    }
-
-    return implode("\n", $queries);
-}
-
 $container = require __DIR__ . '/../config/container.php';
 
-switch ($_SERVER['argv'][1]) {
-    case 'migrate':
-        migrate($container->get(Spot\Locator::class));
-        break;
+$output = function ($action) use ($container) {
+    $migration = new CoiSA\Spot\Migration\Migration($container->get(Spot\Locator::class));
 
-    case 'dump':
-        echo dumpsql($container->get(Spot\Locator::class));
-        break;
+    switch ($action) {
+        case 'create': return $migration->getCreateSql();
+        case 'update': return $migration->getUpdateSql();
+        case 'drop': return $migration->getDropSql();
+    }
+};
 
-    case 'diff':
-    default:
-        echo diffsql($container->get(Spot\Locator::class));
-        break;
-}
+echo $output($_SERVER['argv'][1]);
