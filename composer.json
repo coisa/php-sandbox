@@ -19,17 +19,13 @@
     "psr/container": "^1.0",
     "league/event": "^2.1",
     "filp/whoops": "^2.1",
-    "particle/filter": "^1.4",
-    "particle/validator": "^2.2",
     "zeuxisoo/slim-whoops": "^0.6.1",
     "willdurand/negotiation": "^2.3",
-    "symfony/console": "^3.3",
     "aura/session": "^2.1",
-    "cakephp/utility": "^3.5",
-    "robmorgan/phinx": "^0.9.2",
     "slim/http-cache": "^0.4.0",
     "zendframework/zend-permissions-acl": "^2.6",
-    "coisa/doctrine-dbal-types": "^0.1.2"
+    "coisa/doctrine-dbal-types": "^0.1.2",
+    "coisa/spot2-migrations": "1.0.x-dev"
   },
   "require-dev": {
     "symfony/var-dumper": "^3.3",
@@ -37,13 +33,14 @@
     "fzaninotto/faker": "^1.7",
     "elasticsearch/elasticsearch": "^6.0",
     "php-amqplib/php-amqplib": "^2.7",
-    "fguillot/simple-queue": "^1.0",
-    "coisa/spot2-migrations": "1.0.0b"
+    "fguillot/simple-queue": "^1.0"
   },
   "suggest": {
     "elasticsearch/elasticsearch": "Only if you intent to interact with elasticsearch",
     "php-amqplib/php-amqplib": "Only if you intent to interact with RabbitMQ",
-    "fguillot/simple-queue": "Simple queue abstraction to use with the php-amqplib/php-amqplib package"
+    "fguillot/simple-queue": "Simple queue abstraction to use with the php-amqplib/php-amqplib package",
+    "particle/filter": "Simple filter library",
+    "particle/validator": "Simple validator library"
   },
   "autoload": {
     "psr-4": {
