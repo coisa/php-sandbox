@@ -23,6 +23,6 @@ if has_changed "docker-.*\.ya?ml"; then
 fi
 
 # Update database schema
-if has_changed ".*Entity\.php" || has_changed "bin/db"; then
-    docker-compose run --rm web php bin/db update
+if has_changed ".*Entity.*\.php"; then
+    docker-compose run --rm web ./vendor/bin/spot2 schema-tool:update
 fi

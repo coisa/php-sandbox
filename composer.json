@@ -2,7 +2,7 @@
   "name": "coisa/skeleton",
   "description": "Application skeleton",
   "type": "project",
-  "license": "Apache License 2.0",
+  "license": "Apache-2.0",
   "authors": [
     {
       "name": "Felipe Sayão Lobato Abreu",
@@ -24,10 +24,10 @@
     "aura/session": "^2.1",
     "slim/http-cache": "^0.4.0",
     "zendframework/zend-permissions-acl": "^2.6",
-    "coisa/doctrine-dbal-types": "^0.1.2",
-    "coisa/spot2-migrations": "1.0.x-dev"
+    "coisa/doctrine-dbal-types": "^0.1.2"
   },
   "require-dev": {
+    "coisa/spot2-tools": "^1.0",
     "symfony/var-dumper": "^3.3",
     "phpunit/phpunit": "^6.4",
     "fzaninotto/faker": "^1.7",
