@@ -27,7 +27,7 @@
     "coisa/doctrine-dbal-types": "^0.1.2"
   },
   "require-dev": {
-    "coisa/spot2-tools": "^1.0",
+    "coisa/spot2-tools": "1.0.x-dev",
     "symfony/var-dumper": "^3.3",
     "phpunit/phpunit": "^6.4",
     "fzaninotto/faker": "^1.7",
