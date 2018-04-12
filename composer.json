@@ -9,31 +9,38 @@
       "email": "contato@felipeabreu.com.br"
     }
   ],
+  "minimum-stability": "stable",
+  "support": {
+    "email": "contato@felipeabreu.com.br",
+    "source": "https://github.com/coisa/php-skeleton",
+    "issues": "https://github.com/coisa/php-skeleton/issues"
+  },
   "require": {
     "php": "~7.2",
-    "monolog/monolog": "^1.23",
-    "slim/slim": "^3.8",
-    "league/plates": "^3.3",
-    "vlucas/spot2": "^2.2",
     "psr/http-message": "^1.0",
     "psr/container": "^1.0",
-    "league/event": "^2.1",
+    "monolog/monolog": "^1.23",
     "filp/whoops": "^2.1",
-    "zeuxisoo/slim-whoops": "^0.6.1",
-    "willdurand/negotiation": "^2.3",
-    "aura/session": "^2.1",
+    "slim/slim": "^3.9",
     "slim/http-cache": "^0.4.0",
+    "zeuxisoo/slim-whoops": "^0.6.3",
+    "league/plates": "^3.3",
+    "league/event": "^2.1",
+    "vlucas/spot2": "^2.2",
     "zendframework/zend-permissions-acl": "^2.6",
-    "coisa/doctrine-dbal-types": "^0.1.2"
+    "aura/session": "^2.1",
+    "coisa/doctrine-dbal-types": "1.0.x-dev"
   },
   "require-dev": {
-    "coisa/spot2-tools": "1.0.x-dev",
-    "symfony/var-dumper": "^3.3",
-    "phpunit/phpunit": "^6.4",
+    "phpunit/phpunit": "^7.1",
     "fzaninotto/faker": "^1.7",
+    "squizlabs/php_codesniffer": "^3.2",
+    "symfony/var-dumper": "^4.0",
     "elasticsearch/elasticsearch": "^6.0",
     "php-amqplib/php-amqplib": "^2.7",
-    "fguillot/simple-queue": "^1.0"
+    "fguillot/simple-queue": "^1.0",
+    "symfony/dotenv": "^4.0",
+    "coisa/spot2-tools": "1.0.x-dev"
   },
   "suggest": {
     "elasticsearch/elasticsearch": "Only if you intent to interact with elasticsearch",
@@ -48,9 +55,11 @@
     }
   },
   "scripts": {
+    "doc": "phpdoc -d src -t docs --template responsive-twig",
+    "sniff": "phpcs src/ --standard=PSR2 --report=summary",
     "test": [
       "@composer install",
-      "phpunit"
+      "phpunit --colors=always"
     ],
     "githooks-link": [
       "rm -rf .git/hooks",
@@ -59,15 +68,9 @@
     "copy-dotenv": [
       "cp .env.example .env"
     ],
-    "pre-install-cmd": [
-      "@githooks-link"
-    ],
-    "pre-update-cmd": [
-      "@githooks-link",
-      "Application\\Composer\\Command\\CreateProject::migrate"
-    ],
     "post-create-project-cmd": [
-      "@copy-dotenv"
+      "@copy-dotenv",
+      "@githooks-link"
     ]
   },
   "scripts-descriptions": {
