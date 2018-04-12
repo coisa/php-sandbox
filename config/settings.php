@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/environments.php';
+
 return [
     'settings' => [
         // PHP ini_set
@@ -9,7 +11,8 @@ return [
         ],
 
         // Environment config
-        'debug'         => getenv('DEBUG') ?: false,
+        'debug'               => getenv('DEBUG'),
+        'displayErrorDetails' => getenv('DEBUG'),
 
         // Plates Template Renderer configs
         'plates'        => [
@@ -53,6 +56,13 @@ return [
         'http-cache' => [
             'type' => 'public',
             'maxAge' => 86400
+        ],
+
+        // Social Authorization Providers
+        'github' => [
+            'clientId'          => getenv('GITHUB_CLIENT_ID'),
+            'clientSecret'      => getenv('GITHUB_CLIENT_SECRET'),
+            'redirectUri'       => getenv('GITHUB_CLIENT_REDIRECT_URI'),
         ]
     ]
 ];

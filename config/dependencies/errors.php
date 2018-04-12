@@ -6,9 +6,11 @@ use Psr\Container\ContainerInterface;
 
 return [
     'Whoops\Run' => function (ContainerInterface $container) {
+        $settings = $container->get('settings');
+
         $run = new Whoops\Run();
 
-        if (getenv('DEBUG', false)) {
+        if ($settings['debug']) {
             $run->pushHandler($container->get(Whoops\Handler\PrettyPageHandler::class));
         }
 
