@@ -8,7 +8,7 @@ return [
     'renderer' => function (ContainerInterface $container) {
         return $container->get(League\Plates\Engine::class);
     },
-    League\Plates\Engine::class => function (ContainerInterface $container) {
+    'League\Plates\Engine' => function (ContainerInterface $container) {
         $settings = $container->get('settings');
 
         $engine = new League\Plates\Engine($settings['plates']['path'], $settings['plates']['extension']);
@@ -20,10 +20,10 @@ return [
 
         return $engine;
     },
-    League\Plates\Extension\Asset::class => function (ContainerInterface $container) {
+    'League\Plates\Extension\Asset' => function (ContainerInterface $container) {
         return new League\Plates\Extension\Asset(dirname(dirname(__DIR__)) . '/public');
     },
-    League\Plates\Extension\URI::class => function () {
+    'League\Plates\Extension\URI' => function () {
         return new League\Plates\Extension\URI($_SERVER['PATH_INFO']);
     },
 ];
