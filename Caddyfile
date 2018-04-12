@@ -1,0 +1,22 @@
+:80
+log /var/log/caddy.log
+
+root ./public
+
+fastcgi / 127.0.0.1:9000 php
+gzip
+
+status 403 /forbidden
+
+rewrite {
+    if {path} match /(.git|cache|bin|logs|backups|tests)/.*$
+    to /forbidden
+}
+
+#fastcgi / unix:/var/run/php/php7.0-fpm.sock php {
+#    index app.php
+#}
+
+rewrite {
+    to {path} {path}/ /index.php?{query}
+}
