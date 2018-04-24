@@ -1,15 +1,16 @@
 <?php
 
-namespace Application\Controller\OAuth2;
+namespace App\Controller\OAuth2;
 
 use League\OAuth2\Client\Provider\Github;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class GithubAuthorizeAction
  *
- * @package Application\Controller\OAuth2
+ * @package App\Controller\OAuth2
  */
 class GithubAuthorizeAction
 {
@@ -19,13 +20,19 @@ class GithubAuthorizeAction
     private $provider;
 
     /**
+     * @var LoggerInterface Application Logger,
+     */
+    private $logger;
+
+    /**
      * GithubAuthorizeAction constructor.
      *
      * @param Github $provider
      */
-    public function __construct(Github $provider)
+    public function __construct(Github $provider, LoggerInterface $logger)
     {
         $this->provider = $provider;
+        $this->logger = $logger;
     }
 
     /**
@@ -42,6 +49,7 @@ class GithubAuthorizeAction
         $code = $query['code'] ?? null;
 
         if (!$code) {
+            // @TODO save http referer
             $_SESSION['oauth2github']['state'] = $this->provider->getState();
 
             return $response
