@@ -1,11 +1,11 @@
 <?php
 
-namespace Application\ORM\Entity;
+namespace App\ORM\Entity;
 
 /**
  * Interface EntityInterface
  *
- * @package Application\ORM\Entity
+ * @package App\ORM\Entity
  */
 interface EntityInterface
 {

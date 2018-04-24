@@ -1,13 +1,13 @@
 <?php
 
-namespace Application\ORM\Table;
+namespace App\ORM\Table;
 
 use Doctrine\DBAL\Schema\Table;
 
 /**
  * Class TablePool
  *
- * @package Application\ORM\Table
+ * @package App\ORM\Table
  */
 class TablePool
 {

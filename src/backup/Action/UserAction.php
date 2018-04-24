@@ -1,15 +1,15 @@
 <?php
 
-namespace Application\Action;
+namespace App\Action;
 
-use Application\Domain\User;
+use App\Domain\User;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class UserAction
- * @package Application\Action
+ * @package App\Action
  */
 class UserAction
 {
@@ -30,7 +30,7 @@ class UserAction
     public function __construct(ContainerInterface $container)
     {
         $connection = $container->get('db');
-        $mapper = $connection->mapper('Application\\Domain\\User\\Entity');
+        $mapper = $connection->mapper('App\\Domain\\User\\Entity');
 
         $this->service = new User\Service($mapper);
         $this->events = $container->get('events');

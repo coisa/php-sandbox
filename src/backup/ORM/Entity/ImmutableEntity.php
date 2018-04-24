@@ -1,11 +1,11 @@
 <?php
 
-namespace Application\ORM\Entity;
+namespace App\ORM\Entity;
 
 /**
  * Class ImmutableEntity
  *
- * @package Application\ORM\Entity
+ * @package App\ORM\Entity
  */
 class ImmutableEntity implements EntityInterface
 {

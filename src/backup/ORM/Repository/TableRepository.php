@@ -1,11 +1,11 @@
 <?php
 
-namespace Application\ORM\Repository;
+namespace App\ORM\Repository;
 
-use Application\ORM\Entity\EntityInterface;
-use Application\ORM\Entity\ImmutableEntity;
-use Application\ORM\Entity\MutableEntity;
-use Application\ORM\Table\TableGateway;
+use App\ORM\Entity\EntityInterface;
+use App\ORM\Entity\ImmutableEntity;
+use App\ORM\Entity\MutableEntity;
+use App\ORM\Table\TableGateway;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
@@ -14,7 +14,7 @@ use Doctrine\DBAL\Schema\Table;
 /**
  * Class TableRepository
  *
- * @package Application\ORM\TableRepository
+ * @package App\ORM\TableRepository
  */
 class TableRepository implements RepositoryInterface
 {

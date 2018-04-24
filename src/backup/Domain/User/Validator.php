@@ -1,10 +1,10 @@
 <?php
 
-namespace Application\Domain\User;
+namespace App\Domain\User;
 
 /**
  * Class Validator
- * @package Application\Domain\User
+ * @package App\Domain\User
  */
 class Validator
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Controller;
+namespace App\Web\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Class IndexController
  *
- * @package Application\Controller
+ * @package App\Controller
  */
 class IndexController extends ApplicationController
 {

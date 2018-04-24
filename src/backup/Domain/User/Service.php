@@ -1,10 +1,10 @@
 <?php
 
-namespace Application\Domain\User;
+namespace App\Domain\User;
 
 /**
  * Class Service
- * @package Application\Domain\User
+ * @package App\Domain\User
  */
 class Service
 {

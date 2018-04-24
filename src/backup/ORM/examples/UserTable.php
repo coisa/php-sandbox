@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\ORM\Schema;
+namespace App\ORM\Schema;
 
 use CoiSA\Doctrine\DBAL\Types\PasswordType;
 use Doctrine\DBAL\Schema\Schema;
@@ -10,7 +10,7 @@ use Doctrine\DBAL\Types\Type;
 /**
  * Class UserTable
  *
- * @package Application\ORM\Schema
+ * @package App\ORM\Schema
  */
 class UserTable extends Table
 {

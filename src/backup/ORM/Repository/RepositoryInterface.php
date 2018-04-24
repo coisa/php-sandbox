@@ -1,13 +1,13 @@
 <?php
 
-namespace Application\ORM\Repository;
+namespace App\ORM\Repository;
 
-use Application\ORM\Entity\EntityInterface;
+use App\ORM\Entity\EntityInterface;
 
 /**
  * Interface RepositoryInterface
  *
- * @package Application\ORM\TableRepository
+ * @package App\ORM\TableRepository
  */
 interface RepositoryInterface
 {

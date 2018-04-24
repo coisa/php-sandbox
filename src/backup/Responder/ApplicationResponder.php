@@ -1,12 +1,12 @@
 <?php
 
-namespace Application\Web\Responder;
+namespace App\Web\Responder;
 
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class ApplicationResponder
- * @package Application\Web\Responder
+ * @package App\Web\Responder
  */
 abstract class ApplicationResponder
 {

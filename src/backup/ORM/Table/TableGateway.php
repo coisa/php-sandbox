@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\ORM\Table;
+namespace App\ORM\Table;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Table;
@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Table;
 /**
  * Class TableGateway
  *
- * @package Application\ORM\Table
+ * @package App\ORM\Table
  */
 class TableGateway
 {

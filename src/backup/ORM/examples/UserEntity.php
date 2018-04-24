@@ -1,13 +1,13 @@
 <?php
 
-namespace Application\ORM\Entity;
+namespace App\ORM\Entity;
 
-use Application\ORM\Schema\UserTable;
+use App\ORM\Schema\UserTable;
 
 /**
  * Class UserEntity
  *
- * @package Application\ORM\Entity
+ * @package App\ORM\Entity
  */
 final class UserEntity extends ImmutableEntity
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Controller;
+namespace App\Web\Controller;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\StreamInterface;
@@ -9,7 +9,7 @@ use Slim\Http\Body;
 /**
  * Class ApplicationController
  *
- * @package Application\Controller
+ * @package App\Web\Controller
  */
 abstract class ApplicationController
 {

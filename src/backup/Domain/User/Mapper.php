@@ -1,12 +1,12 @@
 <?php
 
-namespace Application\Domain\User;
+namespace App\Domain\User;
 
 use Spot\Mapper as SpotMapper;
 
 /**
  * Class Mapper
- * @package Application\Domain\User
+ * @package App\Domain\User
  */
 class Mapper extends SpotMapper
 {

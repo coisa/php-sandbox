@@ -1,11 +1,11 @@
 <?php
 
-namespace Application\ORM\Entity;
+namespace App\ORM\Entity;
 
 /**
  * Class MutableEntity
  *
- * @package Application\ORM\Entity
+ * @package App\ORM\Entity
  */
 class MutableEntity implements EntityInterface
 {

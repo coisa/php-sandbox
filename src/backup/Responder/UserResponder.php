@@ -1,15 +1,15 @@
 <?php
 
-namespace Application\Web\Responder;
+namespace App\Web\Responder;
 
 /**
  * Class UserResponder
- * @package Application\Web\Responder
+ * @package App\Web\Responder
  */
 class UserResponder extends ApplicationResponder
 {
     public function create()
     {
-        
+
     }
 }

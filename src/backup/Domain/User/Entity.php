@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Domain\User;
+namespace App\Domain\User;
 
 use CoiSA\Doctrine\DBAL\Types\PasswordType;
 use Doctrine\DBAL\Types\Type;
@@ -10,7 +10,7 @@ use Spot\Mapper;
 
 /**
  * Class Entity
- * @package Application\Domain\User
+ * @package App\Domain\User
  */
 class Entity extends SpotEntity
 {
@@ -18,7 +18,7 @@ class Entity extends SpotEntity
     protected static $table = 'users';
 
     /** @var string */
-    protected static $mapper = 'Application\Domain\User\Mapper';
+    protected static $mapper = 'App\Domain\User\Mapper';
 
     /**
      * @inheritdoc
