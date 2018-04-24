@@ -23,7 +23,10 @@ return [
         // Logger configs
         'logger'        => [
             'path'  => __DIR__ . '/../data/logs/',
-            'level' => getenv('LOG_LEVEL') ?: Monolog\Logger::INFO
+            'level' => getenv('DEBUG') ? Monolog\Logger::DEBUG : Monolog\Logger::INFO,
+            'handlers' => [
+                Monolog\Handler\StreamHandler::class
+            ]
         ],
 
         // Database connection config
@@ -56,6 +59,29 @@ return [
         'http-cache' => [
             'type' => 'public',
             'maxAge' => 86400
+        ],
+
+        // Auth0
+        'auth0' => [
+            'domain' => getenv('AUTH0_DOMAIN'),
+            'client_id' => getenv('AUTH0_CLIENT_ID'),
+            'client_secret' => getenv('AUTH0_CLIENT_SECRET'),
+            'redirect_uri' => getenv('AUTH0_CALLBACK_URL'),
+            'scope' => 'openid profile',
+            'persist_id_token' => true,
+            'persist_access_token' => true,
+            'persist_refresh_token' => true,
+        ],
+
+        // Content Negociation
+        'content-negotiation' => [
+            'App\Web\JsonResponder' => [
+                'application/json',
+                'application/*+json',
+            ],
+            'App\Web\PlatesResponder' => [
+                'text/html'
+            ]
         ],
 
         // Social Authorization Providers

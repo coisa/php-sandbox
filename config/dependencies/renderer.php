@@ -21,7 +21,7 @@ return [
         return $engine;
     },
     'League\Plates\Extension\Asset' => function (ContainerInterface $container) {
-        return new League\Plates\Extension\Asset(dirname(dirname(__DIR__)) . '/public');
+        return new League\Plates\Extension\Asset(dirname(__DIR__, 2) . '/public');
     },
     'League\Plates\Extension\URI' => function () {
         return new League\Plates\Extension\URI($_SERVER['PATH_INFO']);

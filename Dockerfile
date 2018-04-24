@@ -15,18 +15,33 @@ RUN docker-php-ext-install pdo pdo_mysql
 RUN docker-php-ext-install bcmath
 
 # Install Composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
-    php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
-    php -r "unlink('composer-setup.php');"
+COPY --from=composer:1.6 /usr/bin/composer /usr/bin/composer
 
 # Project dependecies
-RUN composer install \
+RUN composer global require hirak/prestissimo \
+    ; \
+    composer install \
         --no-dev \
         --prefer-dist \
-        --optimize-autoloader
+        --optimize-autoloader \
+    ; \
+    composer clearcache
+
+# Set timezone to America/Sao_Paulo
+RUN apk add --update --virtual .build-deps \
+        tzdata \
+    && \
+    cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime \
+    && \
+    echo "America/Sao_Paulo" > /etc/timezone
 
 # Container Command
 CMD ["php", "-S", "0.0.0.0:80", "-t", "/opt/project/public"]
 
-# TODO nginx, monit, letsencrypt (renew), user, permissions, CaddyFile
+# Logs
+VOLUME /opt/project/data/logs
+
+# Cleanup
+RUN apk del .build-deps \
+    ; \
+    rm -rf /var/cache/apk/*

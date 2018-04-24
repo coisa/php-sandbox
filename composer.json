@@ -29,7 +29,12 @@
     "vlucas/spot2": "^2.2",
     "zendframework/zend-permissions-acl": "^2.6",
     "aura/session": "^2.1",
-    "coisa/doctrine-dbal-types": "1.0.x-dev"
+    "coisa/doctrine-dbal-types": "1.0.x-dev",
+    "react/http": "^0.8.3",
+    "cboden/ratchet": "^0.4.1",
+    "symfony/console": "^4.0",
+    "auth0/auth0-php": "^5.1",
+    "willdurand/negotiation": "^2.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.1",
@@ -51,7 +56,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Application\\": "src/"
+      "App\\": "src/"
     }
   },
   "scripts": {

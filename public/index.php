@@ -6,21 +6,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
  * Application scope isolation
  */
 call_user_func(function () {
-    /** @var \Psr\Container\ContainerInterface $container */
-    $container = require __DIR__ . '/../config/container.php';
-
-    $app = new Slim\App($container);
-
-    $routes = require __DIR__ . '/../config/routes.php';
-    $routes($app);
-
-    $acl = require __DIR__ . '/../config/acl.php';
-    $acl($app);
-
-    $middlewares = require __DIR__ . '/../config/middlewares.php';
-    $middlewares($app);
-
     chdir(dirname(__DIR__));
+
+    $app = new App\Web\Application(
+        require __DIR__ . '/../config/container.php'
+    );
 
     return $app->run();
 });

@@ -3,7 +3,7 @@ services:
   web:
     build: .
     image: coisa/skeleton
-    hostname: web.local
+    hostname: web
     ports:
       - 80:80
     env_file: .env
@@ -14,8 +14,17 @@ services:
 
   mysql:
     image: mysql/mysql-server:5.6
-    hostname: mysql.local
+    hostname: mysql
     env_file: .env
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    hostname: phpmyadmin
+    env_file: .env
+    links:
+      - mysql:db
+    ports:
+      - 8080:80
 
   rabbitmq:
     image: rabbitmq:3-management
