@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
     build: .
-    image: coisa/skeleton
+    image: coisa/sandbox
     hostname: web
     ports:
       - 80:80

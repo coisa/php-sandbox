@@ -1,6 +1,6 @@
 {
-  "name": "coisa/skeleton",
-  "description": "Application skeleton",
+  "name": "coisa/sandbox",
+  "description": "Application sandbox",
   "type": "project",
   "license": "Apache-2.0",
   "authors": [
@@ -12,8 +12,8 @@
   "minimum-stability": "stable",
   "support": {
     "email": "contato@felipeabreu.com.br",
-    "source": "https://github.com/coisa/php-skeleton",
-    "issues": "https://github.com/coisa/php-skeleton/issues"
+    "source": "https://github.com/coisa/php-sandbox",
+    "issues": "https://github.com/coisa/php-sandbox/issues"
   },
   "require": {
     "php": "~7.2",
@@ -32,7 +32,6 @@
     "coisa/doctrine-dbal-types": "1.0.x-dev",
     "react/http": "^0.8.3",
     "cboden/ratchet": "^0.4.1",
-    "symfony/console": "^4.0",
     "auth0/auth0-php": "^5.1",
     "willdurand/negotiation": "^2.3"
   },
@@ -45,7 +44,8 @@
     "php-amqplib/php-amqplib": "^2.7",
     "fguillot/simple-queue": "^1.0",
     "symfony/dotenv": "^4.0",
-    "coisa/spot2-tools": "1.0.x-dev"
+    "coisa/spot2-tools": "1.0.x-dev",
+    "symfony/console": "^4.0"
   },
   "suggest": {
     "elasticsearch/elasticsearch": "Only if you intent to interact with elasticsearch",
