@@ -1,13 +1,4 @@
-runtime: php
-env: flex
-
-runtime_config:
-  document_root: public
-  composer_flags: "--no-dev --prefer-dist --optimize-autoloader"
-  #supervisord_conf_addition: #workers
-  #supervisord_conf_override: react-server
-
-default_expiration: "4d 5h"
+runtime: custom
 
 env_variables:
   DEBUG: 0
