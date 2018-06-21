@@ -2,19 +2,39 @@
 
 namespace App\Web\Middleware;
 
-use App\Web\Application;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * Class ContentNegociationMiddleware
+ * Class AcceptHeaderMiddleware
  *
  * @package App\Web\Middleware
  */
-class ContentNegociationMiddleware implements MiddlewareInterface
+class AcceptHeaderMiddleware implements MiddlewareInterface
 {
+    /**
+     * @var array
+     */
+    private $accepts;
+
+    /**
+     * AcceptHeaderMiddleware constructor.
+     *
+     * @param array $accepts
+     */
+    public function __construct(array $accepts)
+    {
+        foreach ($accepts as $accept) {
+            if (is_string($accept)) {
+                // validate class
+            }
+        }
+
+        $this->accepts = $accepts;
+    }
+
     /**
      * @param ServerRequestInterface $request
      * @param RequestHandlerInterface $handler
@@ -23,17 +43,6 @@ class ContentNegociationMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if ($handler instanceof Application) {
-
-        }
-
-        // app/html -> platesresponder -> request attributes
-        // app/json
-
-        //if (!$handler instanceof ResponderAwareInterface) {
-        //    $handler->setResponder($responder);
-        //}
-
         return $handler->handle($request);
     }
 }

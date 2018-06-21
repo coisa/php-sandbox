@@ -10,7 +10,6 @@ use React\EventLoop\Factory;
 use React\Http\Server;
 use React\Promise\Promise;
 use React\Socket\Server as SocketServer;
-use Slim\Http\Response;
 
 $loop = Factory::create();
 
@@ -20,7 +19,7 @@ $server = new Server(function (ServerRequestInterface $request) {
             require __DIR__ . '/../config/container.php'
         );
 
-        $resolve($app->process($request, new Response()));
+        $resolve($app->handle($request));
     });
 
     return $promise;

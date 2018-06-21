@@ -5,15 +5,27 @@ namespace App\Web;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Slim\App;
+use Slim\Http\Response;
 
 /**
  * Class Application
  *
  * @package App\Web
  */
-class Application
+class Application implements RequestHandlerInterface
 {
+    /** @var ContainerInterface */
+    private $container;
+
+    /** @var Router */
+    private $router;
+
+    /** @var \SplQueue */
+    private $middlewares;
+
     /** @var App */
     private $app;
 
@@ -24,9 +36,14 @@ class Application
      */
     public function __construct(ContainerInterface $container)
     {
+        $this->container = $container;
+        $this->middlewares = new \SplQueue();
+
+        $this->router = new Router();
+
         $this->app = new App($container);
 
-        $this->bootstrap(
+        $this->pipeline(
             require 'config/acl.php',
             require 'config/routes.php',
             require 'config/middlewares.php'
@@ -34,19 +51,11 @@ class Application
     }
 
     /**
-     * @return ResponseInterface
-     */
-    public function __invoke()
-    {
-        return $this->run();
-    }
-
-    /**
      * Initializes application file stack
      *
      * @param callable[] ...$initializers
      */
-    private function bootstrap(callable ...$initializers)
+    private function pipeline(callable ...$initializers)
     {
         foreach ($initializers as $initializer) {
             $initializer($this);
@@ -54,15 +63,47 @@ class Application
     }
 
     /**
+     * Returns the application container
+     *
      * @return ContainerInterface
      */
     public function getContainer(): ContainerInterface
     {
-        return $this->app->getContainer();
+        return $this->container;
+    }
+
+    /**
+     * Add middleware to stack execution.
+     *
+     * @param MiddlewareInterface $middleware
+     */
+    public function addMiddleware(MiddlewareInterface $middleware): void
+    {
+        $this->middlewares->enqueue($middleware);
+    }
+
+    /**
+     * Handle the request and return a response.
+     *
+     * @param ServerRequestInterface $request
+     *
+     * @return ResponseInterface
+     */
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        if ($this->middlewares->isEmpty()) {
+            // @TODO define what to do here!
+            return $this->app->process($request, new Response());
+        }
+
+        $middleware = $this->middlewares->dequeue();
+
+        return $middleware->process($request, $this);
     }
 
     /**
      * @return App
+     * @deprecated
      */
     public function getRouter(): App
     {
@@ -73,6 +114,7 @@ class Application
      * @param bool $silent
      *
      * @return \Psr\Http\Message\ResponseInterface
+     * @deprecated
      */
     public function run($silent = false)
     {
@@ -84,6 +126,7 @@ class Application
      * @param ResponseInterface $response
      *
      * @return ResponseInterface
+     * @deprecated
      */
     public function process(ServerRequestInterface $request, ResponseInterface $response)
     {

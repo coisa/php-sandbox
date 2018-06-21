@@ -6,14 +6,16 @@ use League\Plates\Engine;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Http\Body;
+use Slim\Http\Response;
 
 /**
  * Class IndexAction
  *
  * @package App\Web\Action
  */
-class IndexAction
+class IndexAction implements RequestHandlerInterface
 {
     /** @var Engine */
     private $engine;
@@ -26,6 +28,11 @@ class IndexAction
     public function __construct(Engine $engine)
     {
         $this->engine = $engine;
+    }
+
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        return $this($request, new Response());
     }
 
     /**

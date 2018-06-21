@@ -6,12 +6,8 @@ vendor/
 .dockerignore
 .editorconfig
 .env
-.gcloudignore
-.phpstorm.meta.php
-app.yaml
 composer.phar
 composer.lock
 docker-compose.yml
 Dockerfile
-pod.yaml
 README.md
