@@ -39,7 +39,7 @@ return [
 
         // This is not a totally lazy guy.
         // He starts handling in the end of script execution but at least removes duplicate log entries.
-        // If you are having trouble dealing with duplicate log entries choose this guy until you found how to solve the real problem
+        // If you are having trouble dealing with duplicate log entries choose this guy until you find out how to solve the real problem
         return $container->get(Handler\DeduplicationHandler::class);
 
         // If for some odd reason you want to stop handling logs that is what you are looking for
