@@ -15,6 +15,6 @@ if has_changed ".*\.php$"; then
             continue
         fi
 
-        php -l $file
+        docker-compose run web php -l /opt/project/$file
     done
 fi
