@@ -1,17 +1,18 @@
 #!/bin/bash
 
-has_changed() {
-    # Work out what to diff against, really HEAD will work for any established repository.
-    if git rev-parse --verify HEAD >/dev/null 2>&1; then
-        against=HEAD
-    else
-        # Initial commit: diff against an empty tree object
-        against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
-    fi
+set -e
 
-    diffstr=`git diff --cached $against`
-    if [[ -n "$diffstr" ]] ; then
-        echo "You have left DONOCOMMIT in your changes, you can't commit until it has been removed."
-        exit 1
-    fi
+DIR=$(dirname "$(readlink -f "$0")")
+GIT_CHANGES=$(git diff --name-only --cached)
+
+has_changed() {
+    echo $GIT_CHANGES | grep "$1" > /dev/null 2>&1
 }
+
+if has_changed ".*\.php$"; then
+    for file in $GIT_CHANGES; do
+        if [[ $file = *.php ]]; then
+            php -l $file
+        fi
+    done
+fi

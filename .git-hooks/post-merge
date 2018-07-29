@@ -1,11 +1,11 @@
 #!/bin/bash
 
 has_changed() {
-    git diff --name-only HEAD@{1} HEAD | grep "^$1" > /dev/null 2>&1
+    git diff --name-only HEAD@{1} HEAD | grep "$1" > /dev/null 2>&1
 }
 
 # Update composer dependencies
-if has_changed composer; then
+if has_changed "^composer"; then
     docker-compose run --rm web /usr/local/bin/composer install \
         --ignore-platform-reqs \
         --prefer-dist \
@@ -13,16 +13,16 @@ if has_changed composer; then
 fi
 
 # Rebuild docker image
-if has_changed Dockerfile; then
+if has_changed "^Dockerfile(-.*)?$"; then
     docker-compose build
 fi
 
 # Recreate docker services
-if has_changed "docker-.*\.ya?ml"; then
-    docker-compose up -d web
+if has_changed "^docker-.*\.ya?ml$"; then
+    docker-compose up -d
 fi
 
 # Update database schema
-if has_changed ".*Entity.*\.php"; then
-    docker-compose run --rm web ./vendor/bin/spot2 schema-tool:update
+if has_changed ".*Entity.*\.php$"; then
+    docker-compose run --rm web /usr/local/bin/composer run db:migrate
 fi
