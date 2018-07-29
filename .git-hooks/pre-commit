@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Lint Check
+echo 'olar'
+
+# PSR1 & PSR2 syntax check
+
+# EditorConfig syntax check
