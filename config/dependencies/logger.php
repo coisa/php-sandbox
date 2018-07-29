@@ -41,6 +41,9 @@ return [
         // He starts handling in the end of script execution but at least removes duplicate log entries.
         // If you are having trouble dealing with duplicate log entries choose this guy until you found how to solve the real problem
         return $container->get(Handler\DeduplicationHandler::class);
+
+        // If for some odd reason you want to stop handling logs that is what you are looking for
+        return $container->get(Handler\NullHandler::class);
     },
     Handler\FingersCrossedHandler::class => function (ContainerInterface $container) {
         $groupHandler = $container->get(Handler\GroupHandler::class);
@@ -70,9 +73,10 @@ return [
 
         // Then make a little cleanup
         foreach ($handlers as $index => $handler) {
-            if ($handler instanceof Handler\NullHandler) {
-                unset($handlers[$index]);
+            if (!$handler instanceof Handler\NullHandler) {
+                continue;
             }
+            unset($handlers[$index]);
         }
 
         // Just to be sure that we don't brake the execution with a raised handler exception
