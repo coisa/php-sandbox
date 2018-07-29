@@ -80,6 +80,9 @@
     "post-create-project-cmd": [
       "@copy-dotenv",
       "@githooks-link"
+    ],
+    "db:migrate": [
+      "spot2 schema-tool:update"
     ]
   },
   "scripts-descriptions": {
