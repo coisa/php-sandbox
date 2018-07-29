@@ -38,7 +38,7 @@ return function (App\Web\Application $app) {
     */
 
     $engine = $container->get(League\Plates\Engine::class);
-    $router->get('/', new Action\IndexAction($engine))->setName('home');
+    $router->get('/', new Action\IndexAction($engine, $container->get(Psr\Log\LoggerInterface::class)))->setName('home');
 
     $auth0 = $container->get(Auth0\SDK\Auth0::class);
     $router->get('/login', new Action\User\LoginAction($auth0));

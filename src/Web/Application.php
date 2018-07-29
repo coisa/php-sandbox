@@ -88,6 +88,8 @@ class Application implements RequestHandlerInterface
      * @param ServerRequestInterface $request
      *
      * @return ResponseInterface
+     *
+     * @TODO WIP
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
@@ -113,23 +115,13 @@ class Application implements RequestHandlerInterface
     /**
      * @param bool $silent
      *
-     * @return \Psr\Http\Message\ResponseInterface
-     * @deprecated
+     * @return ResponseInterface
+     * @throws \Exception
+     * @throws \Slim\Exception\MethodNotAllowedException
+     * @throws \Slim\Exception\NotFoundException
      */
     public function run($silent = false)
     {
         return $this->app->run($silent);
-    }
-
-    /**
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     *
-     * @return ResponseInterface
-     * @deprecated
-     */
-    public function process(ServerRequestInterface $request, ResponseInterface $response)
-    {
-        return $this->app->process($request, $response);
     }
 }
