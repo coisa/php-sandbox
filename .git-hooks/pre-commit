@@ -11,8 +11,10 @@ has_changed() {
 
 if has_changed ".*\.php$"; then
     for file in $GIT_CHANGES; do
-        if [[ $file = *.php ]]; then
-            php -l $file
+        if [[ $file != *.php ]]; then
+            continue
         fi
+
+        php -l $file
     done
 fi
