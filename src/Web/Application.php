@@ -88,7 +88,9 @@ class Application implements RequestHandlerInterface
      * @param ServerRequestInterface $request
      *
      * @return ResponseInterface
-     *
+     * @throws \Exception
+     * @throws \Slim\Exception\MethodNotAllowedException
+     * @throws \Slim\Exception\NotFoundException
      * @TODO WIP
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
