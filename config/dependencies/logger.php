@@ -68,6 +68,7 @@ return [
             $container->get(Handler\StreamHandler::class),
             $container->get(Handler\ErrorLogHandler::class),
             $container->get(Handler\RedisHandler::class),
+            $container->get(Handler\RavenHandler::class),
             $container->get('Rollbar\Monolog\Handler\RollbarHandler'),
         ];
 
@@ -79,7 +80,7 @@ return [
             unset($handlers[$index]);
         }
 
-        // Just to be sure that we don't brake the execution with a raised handler exception
+        // Just to be sure that we don't break the execution with a raised handler exception
         return new Handler\WhatFailureGroupHandler($handlers);
     },
     Handler\BrowserConsoleHandler::class => function (ContainerInterface $container) {
@@ -111,6 +112,18 @@ return [
         }
 
         return new Handler\RedisHandler($container->get(\Redis::class), 'monolog');
+    },
+    Handler\RavenHandler::class => function (ContainerInterface $container) {
+        if (!$container->has('Raven_Client')) {
+            return $container->get(Handler\NullHandler::class);
+        }
+
+        $ravenClient = $container->get('Raven_Client');
+        if (!$ravenClient) {
+            return $container->get(Handler\NullHandler::class);
+        }
+
+        return new Handler\RavenHandler($ravenClient);
     },
     // We don't know if this class was installed. So we do not try to autoload before the container's call.
     'Rollbar\Monolog\Handler\RollbarHandler' => function (ContainerInterface $container) {
@@ -145,5 +158,17 @@ return [
         }
 
         return $rollabarLogger;
+    },
+    'Raven_Client' => function (ContainerInterface $container) {
+        if (!class_exists('Raven_Client', true)) {
+            return null;
+        }
+
+        $dsn = getenv('SENTRY_DSN');
+        if (!$dsn) {
+            return null;
+        }
+
+        return new Raven_Client($dsn);
     }
 ];
