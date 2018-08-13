@@ -49,7 +49,8 @@
     "fguillot/simple-queue": "^1.0",
     "symfony/dotenv": "^4.0",
     "coisa/spot2-tools": "1.0.x-dev",
-    "symfony/console": "^4.0"
+    "symfony/console": "^4.0",
+    "sentry/sentry": "^1.9"
   },
   "suggest": {
     "elasticsearch/elasticsearch": "Only if you intent to interact with elasticsearch",
