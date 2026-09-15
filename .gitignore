@@ -1,7 +1,6 @@
 /.idea/
-/docs/
-/src/backup
 /vendor/
+/tmp/
+/.phpunit.cache/
 composer.phar
-composer.lock
 .env
