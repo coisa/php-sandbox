@@ -1,18 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console;
 
-use Psr\Container\ContainerInterface;
+use App\Experiment\RunExperiments;
 
-/**
- * Class Application
- *
- * @package App\Console
- */
-class Application
+final readonly class Application
 {
-    public function __construct(ContainerInterface $container)
+    public function __construct(private RunExperiments $experiments)
     {
-        //\Symfony\Component\Console\Application
+    }
+
+    public function run(): string
+    {
+        return json_encode(
+            $this->experiments->run(),
+            JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES,
+        ) . PHP_EOL;
     }
 }

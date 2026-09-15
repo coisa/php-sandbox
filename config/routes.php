@@ -1,46 +1,12 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+declare(strict_types=1);
 
-use App\Web\Action;
+use App\Web\Action\IndexAction;
+use App\Web\Router;
+use Psr\Container\ContainerInterface;
 
-/**
- * Define application routes
- */
-return function (App\Web\Application $app) {
-    $router = $app->getRouter();
-    $container = $app->getContainer();
-
-    $negotiator = new Negotiation\Negotiator();
-    $priorities = [
-        'text/html; charset=UTF-8',
-        'application/json; charset=UTF-8'
-    ];
-
-    /** @var \Psr\Http\Message\RequestInterface $request */
-    $request = $container->get('request');
-    $accepts = $request->getHeaderLine('Accept');
-
-    $mediaType = $negotiator->getBest($accepts, $priorities);
-
-    if (!$mediaType) {
-        // Accept Http Error
-    }
-
-    switch ($mediaType->getType()) {
-        case 'text/html':
-            break;
-    }
-
-    /*
-     // check accepts here?!
-     new IndexAction(new PlatesResponder($engine), $container);
-    */
-
-    $engine = $container->get(League\Plates\Engine::class);
-    $router->get('/', new Action\IndexAction($engine, $container->get(Psr\Log\LoggerInterface::class)))->setName('home');
-
-    $auth0 = $container->get(Auth0\SDK\Auth0::class);
-    $router->get('/login', new Action\User\LoginAction($auth0));
-    $router->get('/logout', new Action\User\LogoutAction($auth0));
+return static function (Router $router, ContainerInterface $container): void {
+    $router->map(['GET'], '/', $container->get(IndexAction::class));
+    $router->map(['GET'], '/experiments', $container->get(IndexAction::class));
 };
