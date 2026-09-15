@@ -129,6 +129,9 @@ active PHP syntax, the test suite and dependency advisories. `composer check`
 runs the deterministic checks locally; `composer audit --locked` checks the
 current advisory database and needs network access.
 
+Dependabot proposes weekly Composer and GitHub Actions updates through pull
+requests. Updates run the same compatibility matrix and are not merged automatically.
+
 ## Migration from the old sandbox
 
 PHP 7.2 / Slim 3 and the old service configuration are no longer the active

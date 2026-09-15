@@ -9,6 +9,7 @@
 - Integration and regression tests, PHP 8.3–8.5 CI, and a committed application
   dependency lock file.
 - English setup, component mapping, extension, compatibility and migration guides.
+- Weekly Composer and GitHub Actions update proposals through Dependabot.
 
 ### Changed
 
