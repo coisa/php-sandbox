@@ -12,8 +12,8 @@
   "minimum-stability": "stable",
   "support": {
     "email": "contato@felipeabreu.com.br",
-    "source": "https://github.com/coisa/php-sandbox",
-    "issues": "https://github.com/coisa/php-sandbox/issues"
+    "source": "https://github.com/artificenerd/php-sandbox",
+    "issues": "https://github.com/artificenerd/php-sandbox/issues"
   },
   "require": {
     "php": "~7.2",
