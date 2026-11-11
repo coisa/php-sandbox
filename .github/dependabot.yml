@@ -13,6 +13,9 @@ updates:
         dependency-type: development
         patterns:
           - "*"
+    labels:
+      - dependencies
+      - composer
   - package-ecosystem: docker
     directory: /
     schedule:
@@ -25,6 +28,9 @@ updates:
       - dependency-name: php
         update-types:
           - version-update:semver-major
+    labels:
+      - dependencies
+      - docker
   - package-ecosystem: docker-compose
     directory: /
     schedule:
@@ -40,3 +46,6 @@ updates:
       - dependency-name: redis
         update-types:
           - version-update:semver-major
+    labels:
+      - dependencies
+      - docker
