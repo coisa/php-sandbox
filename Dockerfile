@@ -1,4 +1,4 @@
-FROM php:7.2-alpine
+FROM php:7.4-alpine
 MAINTAINER Felipe Sayão Lobato Abreu <contato@felipeabreu.com.br>
 
 EXPOSE 80
