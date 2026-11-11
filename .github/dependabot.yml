@@ -1,0 +1,51 @@
+version: 2
+updates:
+  - package-ecosystem: composer
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      composer-production:
+        dependency-type: production
+        patterns:
+          - "*"
+      composer-development:
+        dependency-type: development
+        patterns:
+          - "*"
+    labels:
+      - dependencies
+      - composer
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      docker-images:
+        patterns:
+          - "*"
+    ignore:
+      - dependency-name: php
+        update-types:
+          - version-update:semver-major
+    labels:
+      - dependencies
+      - docker
+  - package-ecosystem: docker-compose
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      compose-images:
+        patterns:
+          - "*"
+    ignore:
+      - dependency-name: rabbitmq
+        update-types:
+          - version-update:semver-major
+      - dependency-name: redis
+        update-types:
+          - version-update:semver-major
+    labels:
+      - dependencies
+      - docker
